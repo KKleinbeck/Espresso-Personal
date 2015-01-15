@@ -678,8 +678,40 @@ class Stretchlin_Force(BondedInteraction):
     stretchlin_force_set_params(self._bondId,self._params["r0"],self._params["kslin"])
     
 
+IF TABULATED == 1:
+  class Tabulated(BondedInteraction):
+    def typeNumber(self):
+      return 6
 
-bondedInteractionClasses = {0:FeneBond, 1:HarmonicBond, 5:Dihedral, 7:Subt_Lj, 13:Angle_Harmonic,\
+    def typeName(self): 
+      return "TABULATED"
+
+    def validKeys(self):
+      return "type", "filename", "npoints", "minval", "maxval", "invstepsize"
+
+    def requiredKeys(self): 
+      return "type", "filename", "npoints", "minval", "maxval", "invstepsize"
+
+    def setDefaultParams(self):
+      self._params = {"type":1, "filename":"", "npoints":0, "minval":0, "maxval":1, \
+        "invstepsize":1} 
+
+    def _getParamsFromEsCore(self):
+      return \
+        {"type":bonded_ia_params[self._bondId].p.tab.type,\
+         "filename":bonded_ia_params[self.bondID].p.tab.filename,\
+         "npoints":bonded_ia_params[self._bondId].p.tab.npoints,\
+         "minval":bonded_ia_params[self._bondId].p.tab.minval,\
+         "maxval":bonded_ia_params[self._bondId].p.tab.maxval,\
+         "invstepsize":bonded_ia_params[self._bondId].p.tab.invstepsize}
+
+    def _setParamsInEsCore(self):
+      tabulated_bonded_set_params(self._params["type"], self._bondId, self._params["filename"])
+#      tabulated_bonded_set_params(self._params["type"], self._params["type1"], self._params["filename"])
+    
+
+
+bondedInteractionClasses = {0:FeneBond, 1:HarmonicBond, 5:Dihedral, 6:Tabulated, 7:Subt_Lj, 13:Angle_Harmonic,\
      14:Angle_Cosine, 15:Angle_Cossquare, 16:Stretching_Force, 17:Area_Force_Local, 18:Bending_Force,\
      19:Volume_Force, 20:Area_Force_Global, 21:Stretchlin_Force}
 

@@ -18,6 +18,7 @@
 #  
 # Handling of interactions
 
+include "myconfig.pxi"
 from _system cimport *
 cimport numpy as np
 from utils cimport *
@@ -238,28 +239,34 @@ cdef extern from "interaction_data.hpp":
   cdef int n_bonded_ia
 
 cdef extern from "fene.hpp":
-    int fene_set_params(int bond_type, double k, double drmax, double r0)
+  int fene_set_params(int bond_type, double k, double drmax, double r0)
 cdef extern from "harmonic.hpp":
-    int harmonic_set_params(int bond_type, double k, double r,double r_cut)
+  int harmonic_set_params(int bond_type, double k, double r,double r_cut)
 cdef extern from "dihedral.hpp":
-    int dihedral_set_params(int bond_type, int mult, double bend, double phase)
+  int dihedral_set_params(int bond_type, int mult, double bend, double phase)
 cdef extern from "angle_harmonic.hpp":
-    int angle_harmonic_set_params(int bond_type, double bend, double phi0)
+  int angle_harmonic_set_params(int bond_type, double bend, double phi0)
 cdef extern from "angle_cosine.hpp":
-    int angle_cosine_set_params(int bond_type, double bend, double phi0)
+  int angle_cosine_set_params(int bond_type, double bend, double phi0)
 cdef extern from "angle_cossquare.hpp":
-    int angle_cossquare_set_params(int bond_type, double bend, double phi0)
+  int angle_cossquare_set_params(int bond_type, double bend, double phi0)
 cdef extern from "subt_lj.hpp":
-    int subt_lj_set_params(int bond_type, double k, double r)
+  int subt_lj_set_params(int bond_type, double k, double r)
 cdef extern from "object-in-fluid/stretching_force.hpp":
-    int stretching_force_set_params(int bond_type, double r0, double ks)
+  int stretching_force_set_params(int bond_type, double r0, double ks)
 cdef extern from "object-in-fluid/area_force_local.hpp":
-    int area_force_local_set_params(int bond_type, double A0_l, double ka_l)
+  int area_force_local_set_params(int bond_type, double A0_l, double ka_l)
 cdef extern from "object-in-fluid/bending_force.hpp":
-    int bending_force_set_params(int bond_type, double phi0, double kb)
+  int bending_force_set_params(int bond_type, double phi0, double kb)
 cdef extern from "object-in-fluid/volume_force.hpp":
-    int volume_force_set_params(int bond_type, double V0, double kv)
+  int volume_force_set_params(int bond_type, double V0, double kv)
 cdef extern from "object-in-fluid/area_force_global.hpp":
-    int area_force_global_set_params(int bond_type, double A0_g, double ka_g)
+  int area_force_global_set_params(int bond_type, double A0_g, double ka_g)
 cdef extern from "object-in-fluid/stretchlin_force.hpp":
-    int stretchlin_force_set_params(int bond_type, double r0, double kslin)
+  int stretchlin_force_set_params(int bond_type, double r0, double kslin)
+    
+IF TABULATED == 1:
+  cdef extern from "interaction_data.hpp":
+    cdef enum TabulatedBondedInteraction: TAB_UNKNOWN = 0, TAB_BOND_LENGTH, TAB_BOND_ANGLE, TAB_BOND_DIHEDRAL
+  cdef extern from "tab.hpp":
+    int tabulated_bonded_set_params(int bond_type, TabulatedBondedInteraction tab_type, char * filename)

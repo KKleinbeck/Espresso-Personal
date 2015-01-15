@@ -24,7 +24,8 @@ from espressomd import code_info
 import numpy as np
 from espressomd.interactions import FeneBond, HarmonicBond, Dihedral, Angle_Harmonic, Angle_Cosine,\
        Angle_Cossquare, Subt_Lj, Stretching_Force, Area_Force_Local, Bending_Force, Volume_Force,\
-       Area_Force_Global, Stretchlin_Force
+       Area_Force_Global, Stretchlin_Force,\
+       Tabulated
 
 
 
@@ -100,7 +101,7 @@ class ParticleProperties(ut.TestCase):
   test_dihedral = generateTestForBondParams(0,Dihedral,{"mult":3.0, "bend":5.2,"phase":3.})
   test_angle_harm = generateTestForBondParams(0,Angle_Harmonic,{"bend":5.2, "phi0":3.2})
   test_angle_cos = generateTestForBondParams(0,Angle_Cosine,{"bend":5.2, "phi0":3.2})
-  test_angle_cossquare = generateTestForBondParams(0,Angle_Cossquare,{"bend":5.2, "phi0":3.2})
+  test_angle_cossquare = generateTestForBondParams(0,Angle_Cossquare,{"bend":5.2, "phi0":0.})
   test_subt_lj = generateTestForBondParams(0,Subt_Lj,{"k":5.2, "r":3.2})
   test_stretching_force = generateTestForBondParams(0,Stretching_Force,{"r0":5.2, "ks":3.2})
   test_area_force_local = generateTestForBondParams(0,Area_Force_Local,{"A0_l":5.2, "ka_l":3.2})
@@ -108,6 +109,10 @@ class ParticleProperties(ut.TestCase):
   test_volume_force = generateTestForBondParams(0,Volume_Force,{"V0":5.2, "kv":3.2})
   test_area_force_global = generateTestForBondParams(0,Area_Force_Global,{"A0_g":5.2, "ka_g":3.2})
   test_stretchlin_force = generateTestForBondParams(0,Stretchlin_Force,{"r0":5.2, "kslin":3.2})
+  
+# ./Bo test_tabulated = generateTestForBondParams(0,Tabulated,{"type":5, "filename":"", "type1":2})
+  test_tabulated = generateTestForBondParams(0,Tabulated,{"type":5, "filename":"", "npoints":1, "minval":0,\
+    "maxval":1, "invstepsize":1})
 
 
 if __name__ == "__main__":

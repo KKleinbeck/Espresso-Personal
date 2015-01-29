@@ -426,6 +426,61 @@ class Dihedral(BondedInteraction):
 
   def _setParamsInEsCore(self):
     dihedral_set_params(self._bondId,self._params["mult"],self._params["bend"],self._params["phase"])
+    
+
+IF TABULATED == 1:
+  class Tabulated(BondedInteraction):
+    def typeNumber(self):
+      return 6
+
+    def typeName(self): 
+      return "TABULATED"
+
+    def validKeys(self):
+      return "type", "filename", "npoints", "minval", "maxval", "invstepsize"
+
+    def requiredKeys(self): 
+      return "type", "filename", "npoints", "minval", "maxval", "invstepsize"
+
+    def setDefaultParams(self):
+      self._params = {"type":1, "filename":"", "npoints":0, "minval":0, "maxval":1, \
+        "invstepsize":1} 
+
+    def _getParamsFromEsCore(self):
+      return \
+        {"type":bonded_ia_params[self._bondId].p.tab.type,\
+         "filename":bonded_ia_params[self.bondID].p.tab.filename,\
+         "npoints":bonded_ia_params[self._bondId].p.tab.npoints,\
+         "minval":bonded_ia_params[self._bondId].p.tab.minval,\
+         "maxval":bonded_ia_params[self._bondId].p.tab.maxval,\
+         "invstepsize":bonded_ia_params[self._bondId].p.tab.invstepsize}
+
+    def _setParamsInEsCore(self):
+      tabulated_bonded_set_params(self._bondId, self._params["type"], self._params["filename"])
+
+   
+IF TABULATED != 1:
+  class Tabulated(BondedInteraction):
+    def typeNumber(self):
+      raise Exception("TABULATED has to be defined in myconfig.hpp.")
+
+    def typeName(self): 
+      raise Exception("TABULATED has to be defined in myconfig.hpp.")
+
+    def validKeys(self):
+      raise Exception("TABULATED has to be defined in myconfig.hpp.")
+
+    def requiredKeys(self):
+      raise Exception("TABULATED has to be defined in myconfig.hpp.")
+
+    def setDefaultParams(self):
+      raise Exception("TABULATED has to be defined in myconfig.hpp.")
+
+    def _getParamsFromEsCore(self):
+      raise Exception("TABULATED has to be defined in myconfig.hpp.")
+
+    def _setParamsInEsCore(self):
+      raise Exception("TABULATED has to be defined in myconfig.hpp.")
    
    
 class Subt_Lj(BondedInteraction):
@@ -451,6 +506,157 @@ class Subt_Lj(BondedInteraction):
 
   def _setParamsInEsCore(self):
     subt_lj_set_params(self._bondId,self._params["k"],self._params["r"])
+
+
+IF BOND_VIRTUAL == 1:
+  class Virtual(BondedInteraction):
+    def typeNumber(self):
+      return 9
+
+    def typeName(self): 
+      return "VIRTUAL"
+
+    def validKeys(self):
+      return
+
+    def requiredKeys(self):
+      return
+
+    def setDefaultParams(self):
+      pass
+
+    def _getParamsFromEsCore(self):
+      pass
+
+    def _setParamsInEsCore(self):
+      virtual_set_params(self._bondId)
+      
+   
+IF BOND_VIRTUAL != 1:
+  class Virtual(BondedInteraction):
+    def typeNumber(self):
+      raise Exception("BOND_VIRTUAL has to be defined in myconfig.hpp.")
+
+    def typeName(self): 
+      raise Exception("BOND_VIRTUAL has to be defined in myconfig.hpp.")
+
+    def validKeys(self):
+      raise Exception("BOND_VIRTUAL has to be defined in myconfig.hpp.")
+
+    def requiredKeys(self):
+      raise Exception("BOND_VIRTUAL has to be defined in myconfig.hpp.")
+
+    def setDefaultParams(self):
+      raise Exception("BOND_VIRTUAL has to be defined in myconfig.hpp.")
+
+    def _getParamsFromEsCore(self):
+      raise Exception("BOND_VIRTUAL has to be defined in myconfig.hpp.")
+
+    def _setParamsInEsCore(self):
+      raise Exception("BOND_VIRTUAL has to be defined in myconfig.hpp.")
+   
+   
+IF BOND_ENDANGLEDIST == 1:
+  class Endangledist(BondedInteraction):
+    def typeNumber(self):
+      return 11
+
+    def typeName(self): 
+      return "ENDANGLEDIST"
+
+    def validKeys(self):
+      return "bend", "phi0", "distmin", "distmax"
+
+    def requiredKeys(self):
+      return "bend", "phi0", "distmin", "distmax"
+
+    def setDefaultParams(self):
+      self._params = {"bend":0, "phi0":0, "distmin":0, "distmax":1}
+
+    def _getParamsFromEsCore(self):
+      return \
+        {"bend":bonded_ia_params[self._bondId].p.endangledist.bend,\
+         "phi0":bonded_ia_params[self._bondId].p.endangledist.phi0,\
+         "distmin":bonded_ia_params[self._bondId].p.endangledist.distmin,\
+         "distmax":bonded_ia_params[self._bondId].p.endangledist.distmax}
+
+    def _setParamsInEsCore(self):
+      endangledist_set_params(self._bondId, self._params["bend"], self._params["phi0"], self._params["distmin"],\
+      self._params["distmax"])
+      
+   
+IF BOND_ENDANGLEDIST != 1:
+  class Endangledist(BondedInteraction):
+    def typeNumber(self):
+      raise Exception("BOND_ENDANGLEDIST has to be defined in myconfig.hpp.")
+
+    def typeName(self): 
+      raise Exception("BOND_ENDANGLEDIST has to be defined in myconfig.hpp.")
+
+    def validKeys(self):
+      raise Exception("BOND_ENDANGLEDIST has to be defined in myconfig.hpp.")
+
+    def requiredKeys(self):
+      raise Exception("BOND_ENDANGLEDIST has to be defined in myconfig.hpp.")
+
+    def setDefaultParams(self):
+      raise Exception("BOND_ENDANGLEDIST has to be defined in myconfig.hpp.")
+
+    def _getParamsFromEsCore(self):
+      raise Exception("BOND_ENDANGLEDIST has to be defined in myconfig.hpp.")
+
+    def _setParamsInEsCore(self):
+      raise Exception("BOND_ENDANGLEDIST has to be defined in myconfig.hpp.")
+
+
+IF OVERLAPPED == 1:
+  class Overlapped(BondedInteraction):
+    def typeNumber(self):
+      return 12
+
+    def typeName(self): 
+      return "OVERLAPPED"
+
+    def validKeys(self):
+      return "overlap_type", "filename"
+
+    def requiredKeys(self):
+      return "overlap_type", "filename"
+
+    def setDefaultParams(self):
+      self._params = {"overlap_type":0, "filename":""}
+
+    def _getParamsFromEsCore(self):
+      return \
+        {"bend":bonded_ia_params[self._bondId].p.overlap.type,\
+         "phi0":bonded_ia_params[self._bondId].p.overlap.filename}
+
+    def _setParamsInEsCore(self):
+      overlapped_bonded_set_params(self._bondId, self._params["overlap_type"], self._params["filename"])
+      
+   
+IF OVERLAPPED != 1:
+  class Overlapped(BondedInteraction):
+    def typeNumber(self):
+      raise Exception("OVERLAPPED has to be defined in myconfig.hpp.")
+
+    def typeName(self): 
+      raise Exception("OVERLAPPED has to be defined in myconfig.hpp.")
+
+    def validKeys(self):
+      raise Exception("OVERLAPPED has to be defined in myconfig.hpp.")
+
+    def requiredKeys(self):
+      raise Exception("OVERLAPPED has to be defined in myconfig.hpp.")
+
+    def setDefaultParams(self):
+      raise Exception("OVERLAPPED has to be defined in myconfig.hpp.")
+
+    def _getParamsFromEsCore(self):
+      raise Exception("OVERLAPPED has to be defined in myconfig.hpp.")
+
+    def _setParamsInEsCore(self):
+      raise Exception("OVERLAPPED has to be defined in myconfig.hpp.")
    
    
 class Angle_Harmonic(BondedInteraction):
@@ -676,44 +882,14 @@ class Stretchlin_Force(BondedInteraction):
 
   def _setParamsInEsCore(self):
     stretchlin_force_set_params(self._bondId,self._params["r0"],self._params["kslin"])
-    
 
-IF TABULATED == 1:
-  class Tabulated(BondedInteraction):
-    def typeNumber(self):
-      return 6
-
-    def typeName(self): 
-      return "TABULATED"
-
-    def validKeys(self):
-      return "type", "filename", "npoints", "minval", "maxval", "invstepsize"
-
-    def requiredKeys(self): 
-      return "type", "filename", "npoints", "minval", "maxval", "invstepsize"
-
-    def setDefaultParams(self):
-      self._params = {"type":1, "filename":"", "npoints":0, "minval":0, "maxval":1, \
-        "invstepsize":1} 
-
-    def _getParamsFromEsCore(self):
-      return \
-        {"type":bonded_ia_params[self._bondId].p.tab.type,\
-         "filename":bonded_ia_params[self.bondID].p.tab.filename,\
-         "npoints":bonded_ia_params[self._bondId].p.tab.npoints,\
-         "minval":bonded_ia_params[self._bondId].p.tab.minval,\
-         "maxval":bonded_ia_params[self._bondId].p.tab.maxval,\
-         "invstepsize":bonded_ia_params[self._bondId].p.tab.invstepsize}
-
-    def _setParamsInEsCore(self):
-      tabulated_bonded_set_params(self._params["type"], self._bondId, self._params["filename"])
-#      tabulated_bonded_set_params(self._params["type"], self._params["type1"], self._params["filename"])
     
 
 
-bondedInteractionClasses = {0:FeneBond, 1:HarmonicBond, 5:Dihedral, 6:Tabulated, 7:Subt_Lj, 13:Angle_Harmonic,\
-     14:Angle_Cosine, 15:Angle_Cossquare, 16:Stretching_Force, 17:Area_Force_Local, 18:Bending_Force,\
-     19:Volume_Force, 20:Area_Force_Global, 21:Stretchlin_Force}
+bondedInteractionClasses = {0:FeneBond, 1:HarmonicBond, 5:Dihedral, 6:Tabulated, 7:Subt_Lj,\
+    9:Virtual, 11:Endangledist, 12:Overlapped,\
+    13:Angle_Harmonic, 14:Angle_Cosine, 15:Angle_Cossquare, 16:Stretching_Force, 17:Area_Force_Local,\
+    18:Bending_Force, 19:Volume_Force, 20:Area_Force_Global, 21:Stretchlin_Force}
 
 
 
